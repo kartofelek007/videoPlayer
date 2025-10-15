@@ -83,7 +83,7 @@ function createVideoControls(video) {
 
     video.addEventListener("timeupdate", () => {
         if (!progress.dataset.max) progress.dataset.max = video.duration;
-        progressBar.style.width = `${Math.floor(video.currentTime * 100 / video.duration)}%`;
+        progressBar.style.width = `${video.currentTime * 100 / video.duration}%`;
     });
 
     video.addEventListener("ended", () => {
