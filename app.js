@@ -101,8 +101,14 @@ function createVideoControls(video) {
         changeProgress = false;
     })
 
+    let lastMoveProgress = 0;
+    let eventThrottleProgress = 1;
+
     document.addEventListener("mousemove", (e) => {
-        if (changeProgress) {
+        let now = Date.now();
+
+        if (changeProgress && now > lastMoveProgress + eventThrottleProgress) {
+            lastMoveProgress = now;
             const rect = progress.getBoundingClientRect();
             const pos = (e.pageX - rect.left) / progress.offsetWidth;
             video.currentTime = pos * video.duration;
@@ -120,8 +126,14 @@ function createVideoControls(video) {
         changeVolume = false;
     })
 
+    let lastMoveVolume = 0;
+    let eventThrottleVolume = 1;
+
     document.addEventListener("mousemove", (e) => {
-        if (changeVolume) {
+        let now = Date.now();
+
+        if (changeVolume && now > lastMoveVolume + eventThrottleVolume) {
+            lastMoveVolume = now;
             const rect = volumeSlider.getBoundingClientRect();
             let pos = 1 - (rect.right - e.pageX) / volumeSlider.offsetWidth;
             changeVideoVolume(pos);
